@@ -1,0 +1,7 @@
+<div class="container">
+  <app-template-error *ngIf="errorMsg" [errorMsg]="errorMsg"></app-template-error>
+  <div *ngFor="let meal of meals; last as last">
+    <app-template-meal [meal]="meal"></app-template-meal>
+    <div *ngIf="!last" style="height: 20px"></div>
+  </div>
+</div>

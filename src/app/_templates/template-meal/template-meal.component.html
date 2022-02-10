@@ -1,0 +1,21 @@
+<div class="container" (click)="clickMeal($event)" [class.nice]="clicked">
+  <div class="date">
+    <img src="./assets/svg/ico/fi-rr-calendar.svg" class="dateicon">
+    {{meal.date | date:'fullDate'}}
+  </div>
+  <div class="meal-container">
+    <span class="meal">{{meal.meal}}</span>
+    <div class="rating-container">
+      <div *ngFor="let item of [].constructor(5-meal.rating)" class="rating-unused">🟡</div>
+      <div *ngFor="let item of [].constructor(meal.rating)">🟡</div>
+    </div>
+  </div>
+  <div class="data-container">
+    <img class="divider" src="./assets/svg/ico/fi-rr-clock.svg">
+    <span class="type">{{meal.time}}</span>
+  </div>
+  <div class="data-container">
+    <img class="divider" src="./assets/svg/ico/fi-rr-info.svg">
+    <span class="type">{{meal.type}}</span>
+  </div>
+</div>
