@@ -1,4 +1,4 @@
-<div class="container" (click)="clickMeal($event)" [class.nice]="clicked">
+<div class="container" [routerLink]="['/entry/view', meal.uuid]">
   <div class="date">
     <img src="./assets/svg/ico/fi-rr-calendar.svg" class="dateicon">
     {{meal.date | date:'fullDate'}}

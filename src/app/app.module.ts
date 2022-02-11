@@ -10,7 +10,9 @@ import { TemplateHeaderComponent } from './_templates/template-header/template-h
 import { TemplateFooterComponent } from './_templates/template-footer/template-footer.component';
 import { ListMealsComponent } from './_pages/list-meals/list-meals.component';
 import { TemplateErrorComponent } from './_templates/template-error/template-error.component';
-import { FormAddEntryComponent } from './_pages/form-add-entry/form-add-entry.component';
+import { EntryComponent } from './_pages/entry/entry.component';
+import { EntryAddComponent } from './_pages/entry-add/entry-add.component';
+import { LoadingComponent } from './_widgets/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { FormAddEntryComponent } from './_pages/form-add-entry/form-add-entry.co
     TemplateFooterComponent,
     ListMealsComponent,
     TemplateErrorComponent,
-    FormAddEntryComponent
+    EntryComponent,
+    EntryAddComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,
