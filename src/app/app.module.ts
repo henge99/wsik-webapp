@@ -12,8 +12,9 @@ import { TemplateFooterComponent } from './_templates/template-footer/template-f
 import { ListMealsComponent } from './_pages/list-meals/list-meals.component';
 import { TemplateErrorComponent } from './_templates/template-error/template-error.component';
 import { EntryComponent } from './_pages/entry/entry.component';
-import { EntryAddComponent } from './_pages/entry-add/entry-add.component';
 import { LoadingComponent } from './_widgets/loading/loading.component';
+import { FormEntryComponent } from './_pages/form-entry/form-entry.component';
+import { HomeComponent } from './_pages/home/home.component';
 
 @NgModule({
   declarations: [
@@ -24,8 +25,9 @@ import { LoadingComponent } from './_widgets/loading/loading.component';
     ListMealsComponent,
     TemplateErrorComponent,
     EntryComponent,
-    EntryAddComponent,
-    LoadingComponent
+    LoadingComponent,
+    FormEntryComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
