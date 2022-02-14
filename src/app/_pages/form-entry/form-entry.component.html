@@ -1,1 +1,49 @@
-<p>form-entry works!</p>
+<div class="container">
+  <div class="header">
+    <span class="big-font-size">Neuen Eintrag hinzufügen</span>
+  </div>
+
+  <div class="option-container">
+    <div class="option-header">
+      <h4>Gericht</h4>
+    </div>
+    <input type="search" class="option-component" placeholder="Suchen...">
+    <select class="option-component">
+      <option *ngFor="let food of foods" value="{{ food.uuid }}">{{ food.food }}</option>
+    </select>
+  </div>
+
+  <div class="option-container">
+    <div class="option-header">
+      <h4>Tageszeit</h4>
+    </div>
+  </div>
+
+  <div class="option-container">
+    <div class="option-header">
+      <h4>Art</h4>
+    </div>
+  </div>
+
+  <div class="option-container">
+    <div class="option-header">
+      <h4>Datum</h4>
+    </div>
+    <button class="option-component" (click)="onBtnSetToday()">Heute</button>
+    <input type="date" class="option-component" [value]="newMealValues.date.toISOString().split('T')[0]" (input)="onDateSelected($event)">
+  </div>
+
+  <div class="option-container">
+    <div class="option-header">
+      <h4>Bewertung</h4>
+    </div>
+    <div class="option-component flexrow">
+      <div *ngFor="let item of [].constructor(5); index as i" class="rating" (click)="onRatingClick(i+1)" [ngClass]="{'rating-unused': i+1 > newMealValues.rating}" >🟡</div>      
+    </div>
+  </div>
+
+  <div class="save-button">
+    <span class="big-font-size">Hinzufügen</span>
+  </div>
+
+</div>
