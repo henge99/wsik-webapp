@@ -1,4 +1,5 @@
 <div class="container">
+
   <div class="header">
     <span class="big-font-size">Neuen Eintrag hinzufügen</span>
   </div>
@@ -7,7 +8,7 @@
     <div class="option-header">
       <h4>Gericht</h4>
     </div>
-    <input type="search" class="option-component" placeholder="Suchen...">
+    <input type="search" class="option-component" placeholder="Suchen..." (input)="onSearchFood($event)">
     <select class="option-component">
       <option *ngFor="let food of foods" value="{{ food.uuid }}">{{ food.food }}</option>
     </select>
@@ -17,12 +18,18 @@
     <div class="option-header">
       <h4>Tageszeit</h4>
     </div>
+    <select class="option-component">
+      <option *ngFor="let time of times" value="{{ time.uuid }}">{{ time.time }}</option>
+    </select>
   </div>
 
   <div class="option-container">
     <div class="option-header">
       <h4>Art</h4>
     </div>
+    <select class="option-component">
+      <option *ngFor="let type of types" value="{{ type.uuid }}">{{ type.type }}</option>
+    </select>
   </div>
 
   <div class="option-container">
