@@ -1,56 +1,63 @@
 <div class="container">
 
-  <div class="header">
-    <span class="big-font-size">Neuen Eintrag hinzufügen</span>
-  </div>
+  <form #formEntry="ngForm" (ngSubmit)="onBtnSubmitClick(formEntry)">
 
-  <div class="option-container">
-    <div class="option-header">
-      <h4>Gericht</h4>
+    <div class="header">
+      <span class="big-font-size">Neuen Eintrag hinzufügen</span>
     </div>
-    <input type="search" class="option-component" placeholder="Suchen..." (input)="onSearchFood($event)">
-    <select class="option-component">
-      <option *ngFor="let food of foods" value="{{ food.uuid }}">{{ food.food }}</option>
-    </select>
-  </div>
 
-  <div class="option-container">
-    <div class="option-header">
-      <h4>Tageszeit</h4>
+    <div class="option-container">
+      <div class="option-header">
+        <h4>Gericht</h4>
+      </div>
+      <input type="search" class="option-component" placeholder="Suchen..." (input)="onSearchFood($event)">
+      <select class="option-component" name="foodUUID" ngModel required>
+        <option *ngFor="let food of foods" value="{{ food.uuid }}">{{ food.food }}</option>
+      </select>
     </div>
-    <select class="option-component">
-      <option *ngFor="let time of times" value="{{ time.uuid }}">{{ time.time }}</option>
-    </select>
-  </div>
 
-  <div class="option-container">
-    <div class="option-header">
-      <h4>Art</h4>
+    <div class="option-container">
+      <div class="option-header">
+        <h4>Tageszeit</h4>
+      </div>
+      <select class="option-component" (input)="onTimeInput($event)" name="timeUUID" ngModel required>
+        <option *ngFor="let time of times" [value]="time.uuid">{{ time.time }}</option>
+      </select>
     </div>
-    <select class="option-component">
-      <option *ngFor="let type of types" value="{{ type.uuid }}">{{ type.type }}</option>
-    </select>
-  </div>
 
-  <div class="option-container">
-    <div class="option-header">
-      <h4>Datum</h4>
+    <div class="option-container">
+      <div class="option-header">
+        <h4>Art</h4>
+      </div>
+      <select class="option-component" name="typeUUID" ngModel required>
+        <option *ngFor="let type of types" [value]="type.uuid">{{ type.type }}</option>
+      </select>
     </div>
-    <button class="option-component" (click)="onBtnSetToday()">Heute</button>
-    <input type="date" class="option-component" [value]="newMealValues.date.toISOString().split('T')[0]" (input)="onDateSelected($event)">
-  </div>
 
-  <div class="option-container">
-    <div class="option-header">
-      <h4>Bewertung</h4>
+    <div class="option-container">
+      <div class="option-header">
+        <h4>Datum</h4>
+      </div>
+      <button class="option-component" (click)="onBtnSetToday()">Heute</button>
+      <input type="date" class="option-component" [value]="newMealValues.date.toISOString().split('T')[0]" (input)="onDateSelected($event)" name="date" ngModel required>
     </div>
-    <div class="option-component flexrow">
-      <div *ngFor="let item of [].constructor(5); index as i" class="rating" (click)="onRatingClick(i+1)" [ngClass]="{'rating-unused': i+1 > newMealValues.rating}" >🟡</div>      
-    </div>
-  </div>
 
-  <div class="save-button">
-    <span class="big-font-size">Hinzufügen</span>
-  </div>
+    <div class="option-container">
+      <div class="option-header">
+        <h4>Bewertung</h4>
+      </div>
+      <div class="option-component flexrow">
+        <span>1</span>
+        <input type="range" #ratingSlider name="rating" ngModel required min="1" max="5" class="rating" [value]="newMealValues.rating" (input)="onRatingChange($event)">
+        <span>5</span>
+      </div>
+      <div class="option-component flexrow">
+        <span *ngFor="let item of [].constructor(5); index as i" [ngClass]="{'rating-unused': i+1 > newMealValues.rating}">🟡</span>
+      </div>
+    </div>
+
+    <input type="submit" value="Hinzufügen" class="save-button big-font-size">
+
+  </form>
 
 </div>

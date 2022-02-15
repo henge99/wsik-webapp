@@ -17,7 +17,7 @@ export class FormEntryComponent implements OnInit {
   public newMealValues = {
     foodUUID: "",
     timeUUID: "",
-    rating: 3,
+    rating: 0,
     date: new Date(Date.now())
   };
   public errorMsg: String;
@@ -28,16 +28,15 @@ export class FormEntryComponent implements OnInit {
     this.getFoods('');
     this.client.get<Time[]>('http://henrik.geers.it:8080/api/time?orderBy=time&order=asc').subscribe(data => {
       this.times = data;
-      console.dir(data);
     }, (error) => {
       this.errorMsg = 'Keine Verbindung zum Server möglich...';
     });
     this.client.get<Type[]>('http://henrik.geers.it:8080/api/type?orderBy=type&order=asc').subscribe(data => {
       this.types = data;
-      console.dir(data);
     }, (error) => {
       this.errorMsg = 'Keine Verbindung zum Server möglich...';
     });
+    this.onBtnSetToday();
   }
 
   private getFoods(foodSearch: string) {
@@ -47,19 +46,16 @@ export class FormEntryComponent implements OnInit {
     }
     this.client.get<Food[]>(`http://henrik.geers.it:8080/api/food?orderBy=food&order=asc${filterFoodSearch}`).subscribe(data => {
       this.foods = data;
-      console.dir(data);
     }, (error) => {
       this.errorMsg = 'Keine Verbindung zum Server möglich...';
     });
   }
 
-  public onRatingClick(rating: number) {
-    this.newMealValues.rating = rating;
-    console.dir(this.newMealValues.date);
+  public onRatingChange(event: any) {
+    this.newMealValues.rating = event.target.value;
   }
 
   public onDateSelected(event: any) {
-    console.dir(event.target.value);
     this.newMealValues.date = new Date(event.target.value);
   }
 
@@ -67,12 +63,34 @@ export class FormEntryComponent implements OnInit {
     let today = new Date(Date.now());
     today = new Date(Date.now() + today.getTimezoneOffset());
     this.newMealValues.date = today;
-    console.dir(this.newMealValues.date);
   }
 
   public onSearchFood(event: any) {
     let foodSearch = event.target.value;
     this.getFoods(foodSearch);
+  }
+
+  public onTimeInput(event: any) {
+    this.newMealValues.timeUUID = event.target.value;
+  }
+
+  public onBtnSubmitClick(formData: any) {
+    if (formData.form.status === 'INVALID') {
+      alert('Es sind noch nicht alle notwendigen Felder passend ausgefüllt');
+    } else {
+      this.client.post<Food[]>(`http://henrik.geers.it:8080/api/meals`, {
+        mealid: formData.value.foodUUID,
+        typeid: formData.value.typeUUID,
+        timeid: formData.value.timeUUID,
+        rating: formData.value.rating,
+        date: formData.value.date,
+      }).subscribe(data => {
+        alert('Eintrag wurde erstellt');
+      }, (error) => {
+        this.errorMsg = 'Keine Verbindung zum Server möglich...';
+      });
+    }
+    console.dir(formData.value)
   }
 
 }
