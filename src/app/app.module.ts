@@ -16,6 +16,7 @@ import { EntryComponent } from './_pages/entry/entry.component';
 import { LoadingComponent } from './_widgets/loading/loading.component';
 import { FormEntryComponent } from './_pages/form-entry/form-entry.component';
 import { HomeComponent } from './_pages/home/home.component';
+import { ListFoodsComponent } from './_pages/list-foods/list-foods.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { HomeComponent } from './_pages/home/home.component';
     EntryComponent,
     LoadingComponent,
     FormEntryComponent,
-    HomeComponent
+    HomeComponent,
+    ListFoodsComponent
   ],
   imports: [
     BrowserModule,

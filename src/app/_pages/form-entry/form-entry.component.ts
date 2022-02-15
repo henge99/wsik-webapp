@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Food } from 'src/app/_interface/food';
 import { Time } from 'src/app/_interface/time';
 import { Type } from 'src/app/_interface/type';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-form-entry',
@@ -11,12 +12,15 @@ import { Type } from 'src/app/_interface/type';
 })
 export class FormEntryComponent implements OnInit {
 
+  @ViewChild('formEntry') formEntry: NgForm;
+
   public foods: Food[] = [];
   public times: Time[] = [];
   public types: Type[] = [];
   public newMealValues = {
     foodUUID: "",
     timeUUID: "",
+    typeUUID: "",
     rating: 0,
     date: new Date(Date.now())
   };
@@ -36,7 +40,6 @@ export class FormEntryComponent implements OnInit {
     }, (error) => {
       this.errorMsg = 'Keine Verbindung zum Server möglich...';
     });
-    this.onBtnSetToday();
   }
 
   private getFoods(foodSearch: string) {

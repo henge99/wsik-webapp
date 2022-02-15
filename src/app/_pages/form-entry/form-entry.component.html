@@ -38,7 +38,7 @@
       <div class="option-header">
         <h4>Datum</h4>
       </div>
-      <button class="option-component" (click)="onBtnSetToday()">Heute</button>
+      <!-- <input type="button" class="option-component" (click)="onBtnSetToday()" value="Heute"> -->
       <input type="date" class="option-component" [value]="newMealValues.date.toISOString().split('T')[0]" (input)="onDateSelected($event)" name="date" ngModel required>
     </div>
 
