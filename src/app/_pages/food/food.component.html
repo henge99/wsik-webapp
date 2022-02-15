@@ -1,0 +1,5 @@
+<div class="container">
+  <app-template-food *ngIf="food; else elseBlock" [food]="food"></app-template-food>
+  <ng-template #elseBlock><app-loading></app-loading></ng-template>
+  <h1>Tolle Details zum Gericht folgen nun hier irgendwann...</h1>
+</div>

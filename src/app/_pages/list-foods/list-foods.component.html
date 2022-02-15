@@ -1,1 +1,8 @@
-<p>list-foods works!</p>
+<div class="container">
+  <button class="save-button big-font-size" [routerLink]="['/foods/add']">Hinzufügen</button>
+  <app-template-error *ngIf="errorMsg" [errorMsg]="errorMsg"></app-template-error>
+  <div *ngFor="let food of foods; last as last">
+    <app-template-food [food]="food"></app-template-food>
+    <div *ngIf="!last" style="height: 20px"></div>
+  </div>
+</div>

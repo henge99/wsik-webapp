@@ -17,6 +17,9 @@ import { LoadingComponent } from './_widgets/loading/loading.component';
 import { FormEntryComponent } from './_pages/form-entry/form-entry.component';
 import { HomeComponent } from './_pages/home/home.component';
 import { ListFoodsComponent } from './_pages/list-foods/list-foods.component';
+import { TemplateFoodComponent } from './_templates/template-food/template-food.component';
+import { FormFoodComponent } from './_pages/form-food/form-food.component';
+import { FoodComponent } from './_pages/food/food.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,10 @@ import { ListFoodsComponent } from './_pages/list-foods/list-foods.component';
     LoadingComponent,
     FormEntryComponent,
     HomeComponent,
-    ListFoodsComponent
+    ListFoodsComponent,
+    TemplateFoodComponent,
+    FormFoodComponent,
+    FoodComponent
   ],
   imports: [
     BrowserModule,

@@ -4,6 +4,7 @@ import { Food } from 'src/app/_interface/food';
 import { Time } from 'src/app/_interface/time';
 import { Type } from 'src/app/_interface/type';
 import { NgForm } from '@angular/forms';
+import { Meal } from 'src/app/_interface/meal';
 
 @Component({
   selector: 'app-form-entry',
@@ -81,7 +82,7 @@ export class FormEntryComponent implements OnInit {
     if (formData.form.status === 'INVALID') {
       alert('Es sind noch nicht alle notwendigen Felder passend ausgefüllt');
     } else {
-      this.client.post<Food[]>(`http://henrik.geers.it:8080/api/meals`, {
+      this.client.post<Meal[]>(`http://henrik.geers.it:8080/api/meals`, {
         mealid: formData.value.foodUUID,
         typeid: formData.value.typeUUID,
         timeid: formData.value.timeUUID,

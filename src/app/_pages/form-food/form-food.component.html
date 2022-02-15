@@ -1,0 +1,20 @@
+<div class="container">
+
+  <form #formFood="ngForm" (ngSubmit)="onBtnSubmitClick(formFood)">
+
+    <div class="header">
+      <span class="big-font-size">Neues Gericht hinzufügen</span>
+    </div>
+
+    <div class="option-container">
+      <div class="option-header">
+        <h4>Bezeichnung</h4>
+      </div>
+      <input type="text" class="option-component" name="food" ngModel required placeholder="Bezeichnung">
+    </div>
+
+    <input type="submit" value="Hinzufügen" class="save-button big-font-size">
+
+  </form>
+
+</div>
