@@ -90,11 +90,11 @@ export class FormEntryComponent implements OnInit {
         date: formData.value.date,
       }).subscribe(data => {
         alert('Eintrag wurde erstellt');
+        this.formEntry.resetForm();
       }, (error) => {
         this.errorMsg = 'Keine Verbindung zum Server möglich...';
       });
     }
-    console.dir(formData.value)
   }
 
 }

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Food } from 'src/app/_interface/food';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-form-food',
@@ -10,6 +11,7 @@ import { Food } from 'src/app/_interface/food';
 export class FormFoodComponent implements OnInit {
 
   public errorMsg: String;
+  @ViewChild('formFood') formFood: NgForm;
 
   constructor(private client: HttpClient) { }
 
@@ -24,6 +26,7 @@ export class FormFoodComponent implements OnInit {
         food: formData.value.food
       }).subscribe(data => {
         alert('Eintrag wurde erstellt');
+        this.formFood.resetForm();
       }, (error) => {
         this.errorMsg = 'Keine Verbindung zum Server möglich...';
       });
