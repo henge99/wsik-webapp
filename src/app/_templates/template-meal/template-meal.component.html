@@ -1,7 +1,7 @@
 <div class="container" [routerLink]="['/entry/view', meal.uuid]">
   <div class="date">
     <img src="./assets/svg/ico/fi-rr-calendar.svg" class="dateicon">
-    {{meal.date | date:'fullDate'}}
+    {{meal.date | date:'d.MM.y EEEE':'de-DE'}}
   </div>
   <div class="meal-container">
     <span class="meal">{{meal.meal}}</span>

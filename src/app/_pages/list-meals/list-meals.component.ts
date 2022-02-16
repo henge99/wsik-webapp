@@ -17,7 +17,6 @@ export class ListMealsComponent implements OnInit {
   ngOnInit(): void {
     this.client.get<Meal[]>('http://henrik.geers.it:8080/api/meals?orderBy=date&order=desc').subscribe(data => {
       this.meals = data;
-      console.dir(data);
     }, (error) => {
       this.errorMsg = 'Keine Verbindung zum Server möglich...';
     });

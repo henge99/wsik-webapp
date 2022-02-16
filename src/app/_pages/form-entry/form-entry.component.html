@@ -38,8 +38,7 @@
       <div class="option-header">
         <h4>Datum</h4>
       </div>
-      <!-- <input type="button" class="option-component" (click)="onBtnSetToday()" value="Heute"> -->
-      <input type="date" class="option-component" [value]="newMealValues.date.toISOString().split('T')[0]" (input)="onDateSelected($event)" name="date" ngModel required>
+      <input type="date" class="option-component"  (input)="onDateSelected($event)" name="date" ngModel required>
     </div>
 
     <div class="option-container">
@@ -56,7 +55,11 @@
       </div>
     </div>
 
-    <input type="submit" value="Hinzufügen" class="save-button big-font-size">
+    <div class="flexrow">
+      <input type="submit" [value]="editMode ? 'Speichern' : 'Hinzufügen'" class="action-button save big-font-size">
+      <div *ngIf="editMode" style="width: 20px;"></div>
+      <input type="button" [value]="'Abbrechen'" *ngIf="editMode" class="action-button cancel big-font-size" (click)="onBtnCancelClick()">
+    </div>
 
   </form>
 

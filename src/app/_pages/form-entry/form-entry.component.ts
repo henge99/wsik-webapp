@@ -1,23 +1,32 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Food } from 'src/app/_interface/food';
 import { Time } from 'src/app/_interface/time';
 import { Type } from 'src/app/_interface/type';
 import { NgForm } from '@angular/forms';
 import { Meal } from 'src/app/_interface/meal';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { Entry } from 'src/app/_interface/entry';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-form-entry',
   templateUrl: './form-entry.component.html',
   styleUrls: ['./form-entry.component.sass']
 })
-export class FormEntryComponent implements OnInit {
+export class FormEntryComponent implements OnInit, OnDestroy {
 
   @ViewChild('formEntry') formEntry: NgForm;
 
+  public errorMsg: String;
+  public editMode: boolean;
+  public entryToEdit: Entry;
+  public entryIdParam: String;
   public foods: Food[] = [];
   public times: Time[] = [];
   public types: Type[] = [];
+  private sub: Subscription;
   public newMealValues = {
     foodUUID: "",
     timeUUID: "",
@@ -25,9 +34,8 @@ export class FormEntryComponent implements OnInit {
     rating: 0,
     date: new Date(Date.now())
   };
-  public errorMsg: String;
 
-  constructor(private client: HttpClient) { }
+  constructor(private client: HttpClient, private route: ActivatedRoute, private router: Router, public location: Location) { }
 
   ngOnInit(): void {
     this.getFoods('');
@@ -41,6 +49,35 @@ export class FormEntryComponent implements OnInit {
     }, (error) => {
       this.errorMsg = 'Keine Verbindung zum Server möglich...';
     });
+    
+    this.sub = this.route.params.subscribe(params => {
+      this.entryIdParam = params['id'];
+      this.editMode = Boolean(this.entryIdParam);
+      
+      if (this.editMode) {
+        this.client.get<Entry>(`http://henrik.geers.it:8080/api/entry/${this.entryIdParam}`).subscribe(data => {
+          this.entryToEdit = data;
+          this.populateForm(this.entryToEdit);
+        }, (error) => {
+          this.errorMsg = 'Keine Verbindung zum Server möglich...';
+        }); 
+      }
+    });
+
+  }
+
+  private populateForm(entry: Entry) {
+
+    this.formEntry.setValue({
+      foodUUID: entry.mealid,
+      typeUUID: entry.typeid,
+      timeUUID: entry.timeid,
+      rating: entry.rating,
+      date: entry.date.split('T')[0]
+    });
+
+    this.newMealValues.rating = entry.rating;
+
   }
 
   private getFoods(foodSearch: string) {
@@ -63,12 +100,6 @@ export class FormEntryComponent implements OnInit {
     this.newMealValues.date = new Date(event.target.value);
   }
 
-  public onBtnSetToday() {
-    let today = new Date(Date.now());
-    today = new Date(Date.now() + today.getTimezoneOffset());
-    this.newMealValues.date = today;
-  }
-
   public onSearchFood(event: any) {
     let foodSearch = event.target.value;
     this.getFoods(foodSearch);
@@ -82,19 +113,42 @@ export class FormEntryComponent implements OnInit {
     if (formData.form.status === 'INVALID') {
       alert('Es sind noch nicht alle notwendigen Felder passend ausgefüllt');
     } else {
-      this.client.post<Meal[]>(`http://henrik.geers.it:8080/api/meals`, {
-        mealid: formData.value.foodUUID,
-        typeid: formData.value.typeUUID,
-        timeid: formData.value.timeUUID,
-        rating: formData.value.rating,
-        date: formData.value.date,
-      }).subscribe(data => {
-        alert('Eintrag wurde erstellt');
-        this.formEntry.resetForm();
-      }, (error) => {
-        this.errorMsg = 'Keine Verbindung zum Server möglich...';
-      });
+      if (this.editMode) {
+        this.client.patch<Entry[]>(`http://henrik.geers.it:8080/api/entry/${this.entryToEdit.uuid}`, {
+          mealid: formData.value.foodUUID,
+          typeid: formData.value.typeUUID,
+          timeid: formData.value.timeUUID,
+          rating: formData.value.rating,
+          date: formData.value.date
+        }).subscribe(data => {
+          alert('Eintrag wurde gespeichert');
+          this.location.back();
+        }, (error) => {
+          this.errorMsg = 'Keine Verbindung zum Server möglich...';
+        });
+      } else {
+        this.client.post<Meal[]>(`http://henrik.geers.it:8080/api/meals`, {
+          mealid: formData.value.foodUUID,
+          typeid: formData.value.typeUUID,
+          timeid: formData.value.timeUUID,
+          rating: formData.value.rating,
+          date: formData.value.date
+        }).subscribe(data => {
+          alert('Eintrag wurde erstellt');
+          this.formEntry.resetForm();
+        }, (error) => {
+          this.errorMsg = 'Keine Verbindung zum Server möglich...';
+        });
+      }
     }
+  }
+
+  public onBtnCancelClick() {
+    this.location.back();
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
 }

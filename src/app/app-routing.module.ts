@@ -18,6 +18,7 @@ const routes: Routes = [
 
   { path: 'entry/view/:id', component: EntryComponent },
   { path: 'entry/add', component: FormEntryComponent },
+  { path: 'entry/edit/:id', component: FormEntryComponent },
   { path: 'entry/:id', redirectTo: 'entry/view/:id', pathMatch: 'full'},
 
   { path: '', component: HomeComponent }

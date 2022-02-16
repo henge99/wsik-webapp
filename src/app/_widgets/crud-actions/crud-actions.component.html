@@ -1,0 +1,5 @@
+<div class="crud-actions" *ngIf="actions">
+  <div *ngFor="let action of actions; last as last">
+    <img class="icon-button" (click)="onActionClick(action)" [ngClass]="{'ico-red':action.color === 'red'}" src="./assets/svg/ico/fi-rr-{{ action.iconPath }}.svg" [ngStyle]="{'margin-right': !last ? '7px':''}">
+  </div>
+</div>

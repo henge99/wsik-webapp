@@ -1,4 +1,6 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
+import localeDe from '@angular/common/locales/de';
+import localeDeExtra from '@angular/common/locales/extra/de';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
@@ -20,6 +22,11 @@ import { ListFoodsComponent } from './_pages/list-foods/list-foods.component';
 import { TemplateFoodComponent } from './_templates/template-food/template-food.component';
 import { FormFoodComponent } from './_pages/form-food/form-food.component';
 import { FoodComponent } from './_pages/food/food.component';
+import { CrudActionsComponent } from './_widgets/crud-actions/crud-actions.component';
+import { AvgRankingComponent } from './_widgets/avg-ranking/avg-ranking.component';
+
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(localeDe, localeDeExtra);
 
 @NgModule({
   declarations: [
@@ -36,7 +43,9 @@ import { FoodComponent } from './_pages/food/food.component';
     ListFoodsComponent,
     TemplateFoodComponent,
     FormFoodComponent,
-    FoodComponent
+    FoodComponent,
+    CrudActionsComponent,
+    AvgRankingComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +55,8 @@ import { FoodComponent } from './_pages/food/food.component';
     FormsModule
   ],
   providers: [
-    {provide: LocationStrategy, useClass: HashLocationStrategy}
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
+    { provide: LOCALE_ID, useValue: 'de' }
   ],
   bootstrap: [AppComponent]
 })

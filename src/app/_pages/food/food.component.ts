@@ -12,6 +12,7 @@ export class FoodComponent implements OnInit {
 
   public foodIdParam: string;
   public food: Food;
+  public avgFoodRanking: number;
   public errorMsg: String;
   private sub: any;
 
@@ -22,7 +23,11 @@ export class FoodComponent implements OnInit {
       this.foodIdParam = params['id']; 
         this.client.get<Food>(`http://henrik.geers.it:8080/api/food/${this.foodIdParam}`).subscribe(data => {
           this.food = data;
-          console.dir(data);
+          
+          this.client.get<number>(`http://henrik.geers.it:8080/api/food/avg/ranking/${this.food.uuid}`).subscribe((ranking) => {
+            this.avgFoodRanking = ranking;
+          });
+
         }, (error) => {
           this.errorMsg = 'Keine Verbindung zum Server möglich...';
         });
